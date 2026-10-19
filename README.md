@@ -18,6 +18,7 @@ Git, GitHub, automated testing, and Docker (planned).
 - Test robot behavior automatically.
 - Track source code changes with Git.
 - Store and share the project on GitHub.
+CI tests run automatically with GitHub Actions
 - Add Docker support in a future stage.
 
 ## 3. Technologies
