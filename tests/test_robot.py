@@ -36,6 +36,32 @@ class TestRobot(unittest.TestCase):
         self.robot.detect_obstacle(False)
         self.robot.move_forward()
         self.assertEqual(self.robot.position, 1)
+        
+    def test_robot_turns_right_to_avoid_obstacle(self):
+        self.robot.avoid_obstacle(
+            front_obstacle=True,
+            right_obstacle=False
+        )
+        self.assertEqual(self.robot.direction, "East")
+        self.assertFalse(self.robot.stopped)
+        self.assertEqual(self.robot.turns, 1)
+
+    def test_robot_stays_stopped_when_both_paths_blocked(self):
+        self.robot.avoid_obstacle(
+            front_obstacle=True,
+            right_obstacle=True
+        )
+        self.assertTrue(self.robot.stopped)
+        self.assertEqual(self.robot.direction, "North")
+
+    def test_robot_does_not_turn_when_path_is_clear(self):
+        self.robot.avoid_obstacle(
+            front_obstacle=False,
+            right_obstacle=False
+        )
+        self.assertEqual(self.robot.direction, "North")
+        self.assertEqual(self.robot.turns, 0)
+
 
 
 if __name__ == "__main__":
