@@ -1,22 +1,22 @@
 
-name: Robot Tests
+name: Robot Tests and Docker
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
-  test:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - name: Build Docker image
+        run: docker build -t robotics-devops .
 
-      - name: Run robot tests
-        run: python -m unittest discover -s tests -v
+      - name: Run tests inside Docker
+        run: docker run --rm --entrypoint python robotics-devops -m unittest discover -s tests -v
